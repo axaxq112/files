@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
+
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>盘</title>
@@ -8,6 +9,82 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://www.layuicdn.com/layui-v2.3.0/css/layui.css">
 	<link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script type="text/javascript" src="https://www.layuicdn.com/layui-v2.3.0/layui.js"></script>
+	<script>
+		layui.use(['layer', 'element'], function () {
+			var layer = layui.layer;
+			var element = layui.element;
+		})
+
+		//复制
+		function copy(url) {
+			url = url.replace("./", "");
+			protocol = window.location.protocol;		//获取协议
+			host = window.location.host;				//获取主机
+			dir = window.location.pathname;				//获取目录
+			dir = dir.replace("index.php", "");
+
+			url = protocol + '//' + host + dir + url;
+			console.log("文件链接:", url);
+			var copy = new clipBoard(document.getElementById('list'), {
+				copy: function () {
+					return url;
+				},
+				afterCopy: function () {
+					layer.msg('复制成功！');
+				}
+			});
+		}
+		//显示二维码
+		function qrcode(name, url) {
+			url = url.replace("./", "");
+			//重组url
+			protocol = window.location.protocol;		//获取协议
+			host = window.location.host;				//获取主机
+			url = protocol + '//' + host + '/' + url;
+
+			//二维码接口
+			qrcodeapi = "https://sapi.k780.com/?app=qr.get&level=L&size=5&data=" + url;
+			var qrimg = "<center><img src = '" + qrcodeapi + "' /></center>";
+			layer.open({
+				type: 1,
+				area: '230px',
+				title: name,
+				content: qrimg
+			});
+		}
+		function getyear() {
+			var date = new Date;
+			var year = date.getFullYear();
+			return year;
+		}
+		function update() {
+			$.ajax({
+				type: "get",
+				url: "gen.php",
+				data: "m=update",
+				dataType: "text",
+				success: function (res) {
+					if (res == "1") {
+						console.info("更新静态页:", "成功");
+					} else {
+						console.warn("更新静态页:", "失败");
+					}
+
+				}
+			});
+		}
+
+		/**
+ * clipboard.js 
+ * width clipboard.js, you can copy cut and paste clipboard data
+ * the main methods ard execCommand for modern browser and clipboardData for ie
+ * @author ganzw@gmail.com
+ * @url    https://github.com/baixuexiyang/clipBoard.js
+ */
+ !function(t,e){"undefined"!=typeof module&&module.exports?module.exports=e():"function"==typeof define&&define.amd?define(e):this[t]=e()}("clipBoard",function(){"use strict";function t(t,e){this.options=e||{},this.tar=t[0]||t,this.options.copy&&this.copyd(),this.options.cut&&this.cut(),this.options.paste&&this.paste()}return t.prototype.copyd=function(t){if(this.options.beforeCopy&&this.options.beforeCopy(),t=t||this.tar.value||this.tar.innerText,this.options.copy&&(t=this.options.copy()),document.execCommand){var e=document.createElement("SPAN");if(e.textContent=t,document.body.appendChild(e),document.selection){var o=document.body.createTextRange();o.moveToElementText(e),o.select()}else if(window.getSelection){var o=document.createRange();o.selectNode(e),window.getSelection().removeAllRanges(),window.getSelection().addRange(o)}document.execCommand("copy"),e.remove?e.remove():e.removeNode(!0)}window.clipboardData&&window.clipboardData.setData("text",t),this.options.afterCopy&&this.options.afterCopy()},t.prototype.cut=function(){if("text"===this.tar.type||"textarea"===this.tar.type){if(this.options.beforeCut&&this.options.beforeCut(),document.execCommand){var t=this.tar;if(document.selection){var e=document.body.createTextRange();e.moveToElementText(t),e.select()}else window.getSelection&&t.select();document.execCommand("cut")}window.clipboardData&&(window.clipboardData.setData("text",this.tar.value),this.tar.value=""),this.options.afterCut&&this.options.afterCut()}},t.prototype.paste=function(){if("text"===this.tar.type||"textarea"===this.tar.type){if(this.options.beforePaste&&this.options.beforePaste(),document.execCommand){var t=this.tar;if(t.setSelectionRange)t.focus(),t.setSelectionRange(t.value.length,t.value.length);else if(t.createTextRange){var e=t.createTextRange();e.collapse(!0),e.moveEnd("character",t.value.length),e.moveStart("character",t.value.length),e.select()}document.execCommand("paste")}!document.execCommand&&window.clipboardData&&(this.tar.value+=window.clipboardData.getData("text")),this.options.afterPaste&&this.options.afterPaste()}},t});
+	</script>
 	<style type="text/css">
 		.header {
 			background-color: #393D49;
@@ -95,7 +172,8 @@
 		}
 	</style>
 </head>
-<body>
+
+<body onload="update()">
 	<div class="header">
 		<div class="layui-container">
 			<div class="layui-row">
@@ -131,7 +209,7 @@
 								<th>文件名</th>
 								<th class="layui-hide-xs"></th>
 								<th class="layui-hide-xs">修改时间</th>
-								<th>文件大小</th>
+								<th>大小</th>
 								<th class="layui-hide-xs">操作</th>
 							</tr>
 						</thead>
@@ -158,13 +236,6 @@
 			</div>
 		</div>
 	</div>
-	<script>
-		function getyear() {
-			var date = new Date;
-			var year = date.getFullYear();
-			return year;
-		}
-	</script>
 	<div class="footer">
 		<div class="layui-container">
 			<div class="layui-row">
@@ -175,9 +246,7 @@
 			</div>
 		</div>
 	</div>
-	<script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-	<script type="text/javascript" src="https://www.layuicdn.com/layui-v2.3.0/layui.js"></script>
-	<script type="text/javascript" src="embed.js"></script>
 	</div>
 </body>
+
 </html>

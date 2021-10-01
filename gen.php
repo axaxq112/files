@@ -1,10 +1,14 @@
 <?php
     /*
-     * 本文件用于生成files.html（utf8编码）,为列表程序，
-     * file_get_contents()
+     * 本文件用于生成files.html
      */
-
-
-
-
+    if(!isset($_GET['m'])) exit;
+    $m = $_GET['m'];
+    switch($m):
+        case "update":
+            echo "1";
+        default:
+            echo $m."is not allowed";
+        
+    
 ?>
