@@ -1,260 +1,183 @@
 <!DOCTYPE html>
-<!-- saved from url=(0022)http://127.0.0.1/zdir/ -->
-<html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	
-	<title>Zdir 实用的目录列表程序</title>
-	<meta name="generator" content="EverEdit">
-	<meta name="author" content="xiaoz.me">
-	<meta name="keywords" content="zdir,h5ai,Directory Lister,Fdscript,目录列表,目录索引">
-	<meta name="description" content="Zdir是一款使用PHP开发的目录列表程序，简单实用，免费开源。">
+<html lang="zh-cn">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>盘</title>
+	<meta name="keywords" content="盘">
+	<meta name="description" content="盘">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" href="http://127.0.0.1/zdir/favicon.ico" type="image/x-icon">
-	<link rel="stylesheet" href="./files_files/layui.css">
-	<link rel="stylesheet" href="./files_files/style.css">
-	<link rel="stylesheet" href="./files_files/font-awesome.min.css">
-<style type="text/css" abt="234"></style><style type="text/css">._th-container ._th-item{margin-bottom:3px;position:relative;width:0;height:0;cursor:pointer;opacity:.3;background-color:aquamarine;border-radius:100%;text-align:center;line-height:30px;-webkit-transition:all .35s;-o-transition:all .35s;transition:all .35s;right:30px}._th-container ._th-item,._th-container ._th-click-hover,._th_cover-all-show-times ._th_times{-webkit-box-shadow:-3px 4px 12px -5px black;box-shadow:-3px 4px 12px -5px black}._th-container:hover ._th-item._item-x2{margin-left:18px;width:40px;height:40px;line-height:40px}._th-container:hover ._th-item._item-x-2{margin-left:17px;width:38px;height:38px;line-height:38px}._th-container:hover ._th-item._item-xx2{width:36px;height:36px;margin-left:16px;line-height:36px}._th-container:hover ._th-item._item-xx-2{width:32px;height:32px;line-height:32px;margin-left:14px}._th-container:hover ._th-item._item-reset{width:30px;line-height:30px;height:30px;margin-left:10px}._th-click-hover{position:relative;-webkit-transition:all .5s;-o-transition:all .5s;transition:all .5s;height:45px;width:45px;cursor:pointer;opacity:.3;border-radius:100%;background-color:aquamarine;text-align:center;line-height:45px;right:0}._th-container:hover{left:-5px}._th-container{font-size:12px;-webkit-transition:all .5s;-o-transition:all .5s;transition:all .5s;left:-35px;top:20%;position:fixed;-webkit-box-sizing:border-box;box-sizing:border-box;z-index:100000;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}._th-container ._th-item:hover{opacity:.8;background-color:#5fb492;color:aliceblue}._th-container ._th-item:active{opacity:.9;background-color:#1b3a26;color:aliceblue}._th-container:hover ._th-click-hover{opacity:.8}._th-container:hover ._th-item{opacity:.6;right:0}._th-container ._th-click-hover:hover{opacity:.8;background-color:#5fb492;color:aliceblue}._th_cover-all-show-times{position:fixed;top:0;right:0;width:100%;height:100%;z-index:99999;opacity:1;font-weight:900;font-size:30px;color:#4f4f4f;background-color:rgba(0,0,0,0.1)}._th_cover-all-show-times._th_hidden{z-index:-99999;opacity:0;-webkit-transition:1s all;-o-transition:1s all;transition:1s all}._th_cover-all-show-times ._th_times{width:300px;height:300px;border-radius:50%;background-color:rgba(127,255,212,0.51);text-align:center;line-height:300px;position:absolute;top:50%;right:50%;margin-top:-150px;margin-right:-150px}</style><script>//remove baidu search ad
-var _countAA = 0
-function doBBBd(){}
-doBBBd()
-document.addEventListener('keyup', function(){_countAA-=10;doBBBd()}, false)
-document.addEventListener('click', function(){_countAA-=10;doBBBd()}, false)
+	<link rel="stylesheet" href="https://www.layuicdn.com/layui-v2.3.0/css/layui.css">
+	<link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<style type="text/css">
+		.header {
+			background-color: #393D49;
+			width: 100%;
+		}
 
-</script><link id="layuicss-layer" rel="stylesheet" href="./files_files/layer.css" media="all"><style>.crx_bdwk_down_wrap {
-    top: 70%;
-    left: 0;
-    position: fixed;
-    z-index: 99999999;
-    color: #fff;
-    user-select: none;
-}
+		.footer {
+			width: 100%;
+			position: fixed;
+			left: 0;
+			bottom: 0;
+			background: #2F4056;
+			color: #E1E1E1;
+			padding: 14px;
+		}
 
-    .crx_bdwk_down_wrap .crx_bdwk_down_loading {
-        background-color: #666;
-        cursor: wait;
-        width: 126px;
-        text-align: center;
-        padding: 16px 0;
-    }
+		.footer a {
+			color: #E1E1E1;
+		}
 
-    .crx_bdwk_down_wrap .crx_bdwk_down_loading p {
-            font-size: 14px;
-        }
+		#list {
+			margin-bottom: 60px;
+		}
 
-    .crx_bdwk_down_wrap .crx_bdwk_down_loading small {
-            font-size: 10px;
-        }
+		#navigation {
+			margin-top: 1em;
+		}
 
-    .crx_bdwk_down_wrap .crx_bdwk_down_btn {
-        width: 126px;
-        height: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: 14px;
-        background-color: #dd5a57;
-        position: relative;
-    }
+		#info {
+			text-align: right;
+		}
 
-    .crx_bdwk_down_wrap .crx_bdwk_down_types {
-        display: flex;
-        text-align: center;
-        align-items: center;
-        background-color: #666;
-        font-size: 12px;
-    }
+		#info a {
+			margin-right: 0.5em;
+		}
 
-    .crx_bdwk_down_wrap .crx_bdwk_down_types div {
-            position: relative;
-        }
+		.showimg {
+			display: none;
+			position: absolute;
+			max-width: 460px;
+			top: 3em;
+			z-index: 99;
+			border: 1px solid #e2e2e2;
+			border-radius: 5px;
+		}
 
-    .crx_bdwk_down_wrap .crx_bdwk_down_types div:after {
-                content: ' ';
-                height: 12px;
-                width: 1px;
-                background-color: #eee;
-                position: absolute;
-                top: 10px;
-                right: 0;
-                transform: scaleX(0.5);
-            }
+		.layui-table img {
+			max-width: 460px;
+		}
 
-    .crx_bdwk_down_wrap .crx_bdwk_down_types div:last-child:after {
-                    display: none;
-                }
+		#cache {
+			margin-top: 2em;
+			margin-bottom: 60px;
+		}
 
-    .crx_bdwk_down_wrap .crx_bdwk_down_types_check {
-            flex: 1;
-            color: #dd5a57;
-            padding: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
+		#cache ul {
+			background-color: #f2f2f2;
+			display: block;
+			line-height: 1.5em;
+			padding-left: 1em;
 
-    .crx_bdwk_down_wrap .crx_bdwk_down_types_uncheck {
-            flex: 1;
-            padding: 8px;
-            cursor: pointer;
-            color: #fff;
-            font-weight: lighter;
-        }
-</style></head>
-<body style="">
-	<!--顶部导航栏-->
+		}
+
+		.logo {
+			float: left;
+			color: #FFFFFF;
+			vertical-align: middle;
+			margin-top: 1em;
+			margin-bottom: 1em;
+		}
+
+		.logo a {
+			color: #FFFFFF;
+		}
+
+		.menu {
+			float: left;
+		}
+
+		.fname {
+			width: 100px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	</style>
+</head>
+<body>
 	<div class="header">
-        <div class="layui-container">
-            <div class="layui-row">
-                <div class="layui-col-lg12">
-	                <div class="logo">
-		                <h1><a href="http://127.0.0.1/zdir/"><i class="fa fa-sitemap" aria-hidden="true"></i> Zdir</a></h1>
-	                </div>
-                    <div class="layui-hide-xs">
-                        <ul class="layui-nav menu" lay-filter="">
-                            <li class="layui-nav-item"><a href="http://127.0.0.1/zdir/"><i class="fa fa-home" aria-hidden="true"></i> 首页</a></li>
-                            <li class="layui-nav-item"><a href="http://127.0.0.1/zdir/cache.php"><i class="fa fa-file-text" aria-hidden="true"></i> 文件索引</a></li>
-                            <!--<li class="layui-nav-item"><a href = "http://soft.xiaoz.org/"><i class="fa fa-globe" aria-hidden="true"></i> HTTP</a></li>-->
-                            <li class="layui-nav-item"><a href="https://github.com/helloxz/zdir" target="_blank" rel="nofollow"><i class="fa fa-code" aria-hidden="true"></i> 源码</a></li>
-                            <li class="layui-nav-item"><a href="https://doc.xiaoz.me/#/zdir/" target="_blank" rel="nofollow"><i class="fa fa-file-text-o" aria-hidden="true"></i> 帮助文档</a></li>
-                            <li class="layui-nav-item"><a href="https://www.xiaoz.me/archives/10465" target="_blank"><i class="layui-icon"></i> 关于</a></li>
-                        <span class="layui-nav-bar" style="left: 216.812px; top: 55px; width: 0px; opacity: 0;"></span></ul>
-                    </div>
-                    <!--<div class = "layui-hide-lg">
-                        <ul class="layui-nav menu" lay-filter="">
-                            <li class="layui-nav-item"><a href="./"><i class="fa fa-home fa-lg"></i> Zdir</a></li>
-                        </ul>
-                    </div>-->
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- 顶部导航栏END -->    <!--面包屑导航-->
-	<div id="navigation" class="layui-hide-xs">
 		<div class="layui-container">
 			<div class="layui-row">
 				<div class="layui-col-lg12">
-					<p>
-						当前位置：<a href="http://127.0.0.1/zdir/">首页</a> 
-						<!--遍历导航-->
-												<a href="http://127.0.0.1/zdir/index.php?dir="></a> / 
-											</p>
-				</div>
-				<!--使用说明-->
-				<!--<div class="layui-col-lg12" style = "margin-top:1em;">
-					<div class="layui-collapse">
-					  <div class="layui-colla-item">
-					    <h2 class="layui-colla-title">使用说明（必看）</h2>
-					    <div class="layui-colla-content">
-						    <iframe src="./functions/viewmd.php?file=/Users/huangsu/OneDrive/website/mac-localhost/zdir/readme.md" width="100%" height="600px" name="" frameborder = "0" align="middle"></iframe>
-					    </div>
-					  </div>
+					<div class="logo">
+						<h1><a href="#"><i class="fa fa-cloud" aria-hidden="true"></i>盘</a>
+						</h1>
 					</div>
-				</div>-->
-				<!--使用说明END-->
+					<div class="layui-hide-xs">
+						<ul class="layui-nav menu" lay-filter="">
+							<span class="layui-nav-bar"
+								style="left: 216.812px; top: 55px; width: 0px; opacity: 0;"></span>
+						</ul>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-    <!--面包屑导航END-->
-	<!--遍历目录-->
 	<div id="list">
 		<div class="layui-container">
-		  	<div class="layui-row">
-		    	<div class="layui-col-lg12">
-			    	<table class="layui-table" lay-skin="line">
-					  	<colgroup>
-					    <col width="400">
-					    <col width="200">
-					    <col width="200">
-					    <col width="180">
-					    <col>
-					  </colgroup>
-					  <thead>
-					    <tr>
-					      <th>文件名</th>
-					      <th class="layui-hide-xs"></th>
-					      <th class="layui-hide-xs">修改时间</th>
-					      <th>文件大小</th>
-					      <th class="layui-hide-xs">操作</th>
-					    </tr> 
-					  </thead>
-					  <tbody>
-					    					    
-					    					    
-					    					    <tr id="id3">
-						    <td>
-							    <!--判断文件是否是图片-->
-							    							    <a href="http://127.0.0.1/zdir/%E6%9C%AA%E5%91%BD%E5%90%8D.docx" id="url3"><i class="fa fa-file-word-o"></i> 未命名.docx</a>
-							    						    </td>
-						    <td id="info" class="layui-hide-xs">
-							    <!--如果是readme.md-->
-							    								<a class="layui-btn layui-btn-xs" href="javascript:;" onclick="office(&#39;./未命名.docx&#39;)">预览</a>
-								<!--文档查看器-->
-							    							    <!--如果是文件-->
-							    									<a href="javascript:;" title="查看文件hash" onclick="filehash(&#39;未命名.docx&#39;,&#39;/Users/huangsu/OneDrive/website/mac-localhost/zdir/未命名.docx&#39;)"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
-									<a href="javascript:;" onclick="qrcode(&#39;未命名.docx&#39;,&#39;./未命名.docx&#39;)" title="显示二维码"><i class="fa fa-qrcode" aria-hidden="true"></i></a>
-							    						    </td>
-						    <td class="layui-hide-xs">2021-10-01 13:36</td>
-						    <td>0KB</td>
-						    <td class="layui-hide-xs">
-							    								<a href="javascript:;" class="layui-btn layui-btn-xs" onclick="copy(&#39;./未命名.docx&#39;)">复制</a>
-							    							    <!--如果是管理模式-->
-							    							    <!--如果是markdown文件-->
-							    						    </td>
-					    </tr>
-					    					    <tr id="id4">
-						    <td>
-							    <!--判断文件是否是图片-->
-							    							    <a href="http://127.0.0.1/zdir/%E6%9C%AA%E5%91%BD%E5%90%8D%E7%9A%84%E5%89%AF%E6%9C%AC.docx" id="url4"><i class="fa fa-file-word-o"></i> 未命名的副本.docx</a>
-							    						    </td>
-						    <td id="info" class="layui-hide-xs">
-							    <!--如果是readme.md-->
-							    								<a class="layui-btn layui-btn-xs" href="javascript:;" onclick="office(&#39;./未命名的副本.docx&#39;)">预览</a>
-								<!--文档查看器-->
-							    							    <!--如果是文件-->
-							    									<a href="javascript:;" title="查看文件hash" onclick="filehash(&#39;未命名的副本.docx&#39;,&#39;/Users/huangsu/OneDrive/website/mac-localhost/zdir/未命名的副本.docx&#39;)"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
-									<a href="javascript:;" onclick="qrcode(&#39;未命名的副本.docx&#39;,&#39;./未命名的副本.docx&#39;)" title="显示二维码"><i class="fa fa-qrcode" aria-hidden="true"></i></a>
-							    						    </td>
-						    <td class="layui-hide-xs">2021-10-01 13:36</td>
-						    <td>0KB</td>
-						    <td class="layui-hide-xs">
-							    								<a href="javascript:;" class="layui-btn layui-btn-xs" onclick="copy(&#39;./未命名的副本.docx&#39;)">复制</a>
-							    							    <!--如果是管理模式-->
-							    							    <!--如果是markdown文件-->
-							    						    </td>
-					    </tr>
-					    					  </tbody>
-					</table>
-		    	</div>
-		  	</div>
-		</div> 
-	</div>
-<!-- 底部 -->
- 	<div class="footer">
-		<div class="layui-container">
 			<div class="layui-row">
 				<div class="layui-col-lg12">
-				Copyright © 2017-2018 Powered by <a href="https://github.com/helloxz/zdir" target="_blank">Zdir</a> | Author <a href="https://www.xiaoz.me/" target="_blank">xiaoz.me</a>
+					<table class="layui-table" lay-skin="line">
+						<colgroup>
+							<col width="400">
+							<col width="200">
+							<col width="200">
+							<col width="180">
+							<col>
+						</colgroup>
+						<thead>
+							<tr>
+								<th>文件名</th>
+								<th class="layui-hide-xs"></th>
+								<th class="layui-hide-xs">修改时间</th>
+								<th>文件大小</th>
+								<th class="layui-hide-xs">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<a href="http://127.0.0.1/zdir/%E6%9C%AA%E5%91%BD%E5%90%8D.docx" id="url3"><i
+											class="fa fa-file-word-o"></i> 未命名.docx</a>
+								</td>
+								<td id="info" class="layui-hide-xs">
+									<a href="javascript:;" onclick="qrcode(&#39;未命名.docx&#39;,&#39;./未命名.docx&#39;)"
+										title="显示二维码"><i class="fa fa-qrcode" aria-hidden="true"></i></a>
+								</td>
+								<td class="layui-hide-xs">2021-10-01 13:36</td>
+								<td>0KB</td>
+								<td class="layui-hide-xs">
+									<a href="javascript:;" class="layui-btn layui-btn-xs"
+										onclick="copy(&#39;./未命名.docx&#39;)">复制直链</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- 底部END -->
-	
-	<!--遍历目录END-->
-	<script type="text/javascript" src="./files_files/jquery-2.0.3.min.js"></script>
-	<script type="text/javascript" src="./files_files/layui.js"></script>
-	<script type="text/javascript" src="./files_files/embed.js"></script>
-	<script type="text/javascript" src="./files_files/clipBoard.min.js"></script>
-
-<div><div class="_th-container">
-    <div class="_th-click-hover _item-input">
-        x1.00
-    </div>
-    <div class="_th-item _item-x2">&gt;</div>
-    <div class="_th-item _item-x-2">&lt;</div>
-    <div class="_th-item _item-xx2">&gt;&gt;</div>
-    <div class="_th-item _item-xx-2">&lt;&lt;</div>
-    <div class="_th-item _item-reset">O</div>
-</div>
-<div class="_th_cover-all-show-times _th_hidden">
-    <div class="_th_times">x1.00</div>
-</div></div></body></html>
+	<script>
+		function getyear() {
+			var date = new Date;
+			var year = date.getFullYear();
+			return year;
+		}
+	</script>
+	<div class="footer">
+		<div class="layui-container">
+			<div class="layui-row">
+				<div class="layui-col-lg12">
+					©
+					<script>document.write(getyear());</script>盘
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script type="text/javascript" src="https://www.layuicdn.com/layui-v2.3.0/layui.js"></script>
+	<script type="text/javascript" src="embed.js"></script>
+	</div>
+</body>
+</html>
